@@ -1,0 +1,4 @@
+quiz_id,quiz_title,quiz_description,time_limit_min,slot,question,question_type,option_a,option_b,option_c,option_d,correct,explanation,points
+my-quiz,My new quiz,A short description shown on the quiz tile.,10,,Single-answer question: participants see radio buttons.,single,First option,Second option,Third option (optional),Fourth option (optional),A,Optional explanation shown after the quiz.,1
+my-quiz,My new quiz,A short description shown on the quiz tile.,10,,A true/false question needs only two options.,single,True,False,,,B,,1
+my-quiz,My new quiz,A short description shown on the quiz tile.,10,,Multiple-answer question: participants see checkboxes.,multiple,Correct one,Wrong one,Another correct one,Another wrong one,A;C,Separate several correct letters with a semicolon.,2

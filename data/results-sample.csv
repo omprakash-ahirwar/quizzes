@@ -1,0 +1,4 @@
+result_id,submitted_at,quiz_id,quiz_title,participant,score,max_score,percent,correct_count,question_count,duration_sec,answers
+r-sample1,2026-10-20T10:12:00.000Z,web-basics,Web development basics,Aarav Mehta,6,7,86,5,6,142,1:A|2:C|3:B|4:C|5:C|6:A
+r-sample2,2026-10-20T11:40:00.000Z,web-basics,Web development basics,Diya Nair,7,7,100,6,6,118,1:A|2:C|3:B|4:C|5:C|6:B
+r-sample3,2026-10-21T09:05:00.000Z,space,Space and astronomy,Kabir Singh,4,6,67,4,5,96,1:B|2:C|3:A|4:B|5:B

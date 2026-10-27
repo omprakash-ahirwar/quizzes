@@ -1,0 +1,217 @@
+/* ==========================================================================
+   quiz.css — participant page: quiz list, intro, player, result
+   ========================================================================== */
+
+.view { animation: view-in var(--slow) var(--ease); }
+@keyframes view-in { from { opacity: 0; transform: translateY(12px); } }
+
+/* ---------- Hero + quiz list ---------- */
+.hero { max-width: 640px; margin-bottom: 36px; }
+.hero h1 { margin-bottom: 14px; }
+.hero p { font-size: 1.12rem; color: var(--ink-soft); max-width: 52ch; }
+
+.preview-banner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 12px 18px; margin-bottom: 24px;
+  border-radius: var(--radius-md);
+  background: var(--sun-soft); color: #7a4c00; font-weight: 500;
+}
+
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+.quiz-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 250px;
+  padding: 26px;
+  border: 0;
+  border-radius: var(--radius-lg);
+  background: var(--glass-strong);
+  box-shadow: var(--shadow-soft), inset 0 0 0 1px rgba(255, 255, 255, 0.95);
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 300ms var(--ease), box-shadow 300ms var(--ease);
+}
+.quiz-tile::after {
+  /* soft accent glow in the corner */
+  content: '';
+  position: absolute;
+  right: -60px; top: -60px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0.14;
+  transition: transform 500ms var(--ease);
+}
+.quiz-tile:hover { transform: translateY(-4px); box-shadow: var(--shadow-float); }
+.quiz-tile:hover::after { transform: scale(1.3); }
+.quiz-glyph {
+  width: 56px; height: 56px;
+  display: grid; place-items: center;
+  border-radius: 18px;
+  background: var(--accent);
+  color: #fff;
+  font: 800 1.7rem/1 var(--font-display);
+  transform: rotate(-6deg);
+  box-shadow: 0 12px 24px -12px var(--accent);
+}
+.quiz-tile h3 { font-size: 1.35rem; margin: 0; }
+.quiz-tile p { color: var(--ink-soft); margin: 0; flex: 1; }
+.quiz-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+.quiz-tile .start-label { font-weight: 700; color: var(--accent); }
+
+/* ---------- Intro ---------- */
+.intro { text-align: center; }
+.intro .quiz-glyph { margin: 0 auto 18px; width: 72px; height: 72px; font-size: 2.1rem; border-radius: 22px; }
+.intro .quiz-meta { justify-content: center; margin-bottom: 24px; }
+.intro form { max-width: 380px; margin: 0 auto; text-align: left; }
+.intro .btn { width: 100%; }
+
+/* ---------- Player ---------- */
+.player-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.player-head .count { font-weight: 600; color: var(--ink-soft); }
+.timer { font-variant-numeric: tabular-nums; }
+.timer.low { background: var(--coral-soft); color: #b4202f; animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 50% { transform: scale(1.06); } }
+
+.progress { display: flex; gap: 6px; margin-bottom: 28px; }
+.progress span {
+  flex: 1;
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(31, 37, 71, 0.08);
+  transition: background 300ms var(--ease);
+}
+.progress span.done { background: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent); }
+.progress span.current { background: var(--accent); }
+
+.question-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 3.2vw, 2rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 0 0 26px;
+}
+.question-card { animation: q-in 420ms var(--ease); }
+@keyframes q-in { from { opacity: 0; transform: translateX(18px); } }
+
+.answer-hint { margin: -12px 0 18px; }
+
+/* Options: each is a <label> wrapping a real radio button (single) or checkbox (multiple) */
+.options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 74px;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: inset 0 0 0 2px var(--line);
+  font: 500 1.02rem/1.35 var(--font-body);
+  color: var(--ink);
+  cursor: pointer;
+  transition: box-shadow var(--fast), transform var(--fast) var(--ease), background var(--fast);
+}
+.option:hover { box-shadow: inset 0 0 0 2px var(--accent); transform: translateY(-1px); }
+.option:has(input:checked) { background: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent); }
+.option:has(input:focus-visible) { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+/* The control itself: a circle for radio, a rounded square for checkbox */
+.option input {
+  appearance: none;
+  -webkit-appearance: none;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  border: 2px solid var(--line-strong);
+  background: #fff;
+  cursor: pointer;
+  transition: border-color var(--fast), background var(--fast);
+}
+.option input:focus-visible { outline: none; }
+.option input[type='radio'] { border-radius: 50%; }
+.option input[type='checkbox'] { border-radius: 7px; }
+.option input::after { content: ''; transform: scale(0); transition: transform 200ms var(--ease); }
+.option input[type='radio']::after { width: 10px; height: 10px; border-radius: 50%; background: #fff; }
+.option input[type='checkbox']::after {
+  width: 6px; height: 11px; margin-top: -2px;
+  border: solid #fff; border-width: 0 3px 3px 0;
+  transform: rotate(45deg) scale(0);
+}
+.option input:checked { border-color: var(--accent); background: var(--accent); }
+.option input[type='radio']:checked::after { transform: scale(1); }
+.option input[type='checkbox']:checked::after { transform: rotate(45deg) scale(1); }
+
+.option .key {
+  flex: none;
+  width: 30px; height: 30px;
+  display: grid; place-items: center;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font: 800 0.92rem/1 var(--font-display);
+}
+.option:has(input:checked) .key { background: #fff; }
+
+.player-foot { margin-top: 30px; }
+.kbd-hint { color: var(--ink-faint); font-size: 0.84rem; }
+
+/* ---------- Result ---------- */
+.result-top { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center; }
+.score-ring { position: relative; width: 180px; height: 180px; }
+.score-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.score-ring circle { fill: none; stroke-width: 14; }
+.score-ring .track { stroke: rgba(31, 37, 71, 0.08); }
+.score-ring .value {
+  stroke: var(--accent);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1400ms var(--ease);
+}
+.score-ring .label {
+  position: absolute; inset: 0;
+  display: grid; place-content: center; text-align: center;
+}
+.score-ring .label b { font: 800 2.6rem/1 var(--font-display); letter-spacing: -0.03em; }
+.score-ring .label span { color: var(--ink-soft); font-size: 0.86rem; }
+
+.review { display: grid; gap: 12px; margin-top: 8px; }
+.review-item {
+  padding: 16px 18px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.8);
+  border-left: 5px solid var(--coral);
+}
+.review-item.correct { border-left-color: var(--mint); }
+.review-item h4 { font-family: var(--font-body); font-size: 1rem; font-weight: 600; margin-bottom: 8px; letter-spacing: 0; }
+.review-item .answers { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+.review-item .explain { color: var(--ink-soft); font-size: 0.92rem; margin: 6px 0 0; }
+
+@media (max-width: 640px), (hover: none) {
+  .kbd-hint { display: none; }
+}
+@media (max-width: 640px) {
+  .options { grid-template-columns: 1fr; }
+  .result-top { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .result-top .btn-row { justify-content: center; }
+}

@@ -1,0 +1,194 @@
+/* ==========================================================================
+   theme.css — design tokens, base elements, page backdrop
+   Change colors / fonts here and the whole app follows.
+   ========================================================================== */
+
+:root {
+  /* Ink */
+  --ink: #1f2547;
+  --ink-soft: #5b6386;
+  --ink-faint: #8d93b3;
+
+  /* Surfaces */
+  --glass: rgba(255, 255, 255, 0.66);
+  --glass-strong: rgba(255, 255, 255, 0.88);
+  --line: rgba(31, 37, 71, 0.09);
+  --line-strong: rgba(31, 37, 71, 0.16);
+
+  /* Accents (one per publish slot, plus feedback colors) */
+  --violet: #6c4cf1;
+  --violet-deep: #4b2fd6;
+  --violet-soft: #ece7ff;
+  --mint: #12a87e;
+  --mint-soft: #dbf6ec;
+  --coral: #e8485a;
+  --coral-soft: #ffe2e5;
+  --sun: #e8950f;
+  --sun-soft: #fff0d3;
+  --sky: #2f7cf6;
+  --sky-soft: #e0ecff;
+
+  /* Shape */
+  --radius-xl: 32px;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  --shadow-float: 0 30px 70px -30px rgba(60, 40, 170, 0.38), 0 2px 8px rgba(31, 37, 71, 0.05);
+  --shadow-soft: 0 10px 30px -18px rgba(60, 40, 170, 0.35);
+
+  /* Type */
+  --font-display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --font-body: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --fast: 180ms;
+  --slow: 520ms;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; background-color: #eef1ff; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: linear-gradient(165deg, #eef1ff 0%, #f6efff 42%, #eafaf4 100%) fixed;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.4em;
+}
+h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; }
+h3 { font-size: 1.2rem; font-weight: 700; }
+p { margin: 0 0 1em; }
+a { color: var(--violet-deep); }
+img, svg { display: block; max-width: 100%; }
+
+:focus-visible {
+  outline: 3px solid var(--violet);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ---------- Drifting colour backdrop (the one ambient motion) ---------- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.blob {
+  position: absolute;
+  width: 46vmax;
+  height: 46vmax;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.45;
+  animation: drift 34s ease-in-out infinite alternate;
+}
+.blob.b1 { background: #b9a8ff; top: -18vmax; left: -12vmax; }
+.blob.b2 { background: #9be8cf; bottom: -20vmax; right: -14vmax; animation-delay: -12s; }
+.blob.b3 { background: #ffd79a; top: 30%; left: 45%; width: 30vmax; height: 30vmax; opacity: 0.3; animation-delay: -22s; }
+
+@keyframes drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(6vmax, 4vmax) scale(1.08); }
+  100% { transform: translate(-4vmax, 7vmax) scale(0.95); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
+
+/* ---------- Layout shell ---------- */
+.container {
+  width: min(1080px, 100% - 32px);
+  margin-inline: auto;
+}
+.container.narrow { width: min(760px, 100% - 32px); }
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: min(1080px, 100% - 32px);
+  margin: 18px auto 0;
+  padding: 10px 12px 10px 16px;
+  background: var(--glass);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-soft);
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+.brand-mark {
+  width: 34px; height: 34px;
+  border-radius: 11px;
+  background: conic-gradient(from 210deg, var(--violet), var(--sky), var(--mint), var(--sun), var(--violet));
+  display: grid;
+  place-items: center;
+  color: #fff;
+  font-size: 1.05rem;
+  box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.35);
+}
+.topnav { display: flex; gap: 4px; }
+.topnav a {
+  padding: 8px 16px;
+  border-radius: 999px;
+  color: var(--ink-soft);
+  font-weight: 600;
+  text-decoration: none;
+  transition: background var(--fast), color var(--fast);
+}
+.topnav a:hover { color: var(--ink); background: rgba(255, 255, 255, 0.8); }
+.topnav a[aria-current='page'] { color: #fff; background: var(--ink); }
+
+main { padding: 40px 0 80px; }
+
+.footer-note {
+  text-align: center;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+  padding-bottom: 32px;
+}
+
+@media (max-width: 560px) {
+  .topbar { border-radius: 22px; }
+  .brand span:last-child { display: none; }
+  .topnav a { padding: 8px 12px; font-size: 0.92rem; }
+  main { padding-top: 28px; }
+}
