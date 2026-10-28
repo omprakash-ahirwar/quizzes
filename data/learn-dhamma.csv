@@ -1,3 +1,4 @@
 ﻿quiz_id,quiz_title,quiz_description,time_limit_min,slot,question,question_type,option_a,option_b,option_c,option_d,correct,explanation,points
-quiz-zbpari68z,Learn Dhamma,Dhamma Learning center,15,4,What was Buddha birth name?,single,Kapil Siddharth,Suddodhan,Dev Dutta,Anand,A,,1
-quiz-zbpari68z,Learn Dhamma,Dhamma Learning center,15,4,In which county Buddha birth place is located?,single,India,Nepal,China,USA,B,,1
+quiz-zbpari68z,Learn Dhamma,Dhamma Learning center,15,1,What was Buddha birth name?,single,Kapil Siddharth,Suddodhan,Dev Dutta,Anand,A,,1
+quiz-zbpari68z,Learn Dhamma,Dhamma Learning center,15,1,In which country Buddha birth place is located?,single,India,Nepal,China,USA,B,,1
+quiz-zbpari68z,Learn Dhamma,Dhamma Learning center,15,1,Who is most important in Buddha philosophy?,single,Human being and remedy of his suffering,God and his superpower,God and Atma (soul),Tripital,A,,1
